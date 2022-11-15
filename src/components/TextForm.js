@@ -3,7 +3,7 @@
 import React from 'react'
 import { useState } from 'react'
 
-export default function TextForm(props) {
+export default function TextForm(props) { 
 
     const handle_UpClick = (event) => {
         // console.log("buttin clicked" + text );
@@ -31,9 +31,10 @@ export default function TextForm(props) {
     }
 
     const handle_CopyText = () => {
-        let text = document.getElementById("text-box");
-        text.select();
-        navigator.clipboard.writeText(text.value)
+        // let text = document.getElementById("text-box");
+        // text.select();
+        navigator.clipboard.writeText(text);
+        // document.getSelection().removeAllRanges();
         props.showAlert("Text got copied to Clipboard !", "success")
     }
 
@@ -49,30 +50,26 @@ export default function TextForm(props) {
     return (
         <>
             <div className="container" style = {{color: props.mode === 'light'? '#041954': 'white'}}>
-                <h3 style = {{color: props.mode === 'light'? '#041954': 'white'}}>{props.heading}</h3>
+                <h3 style = {{color: props.mode === 'light'? '#041954': 'white'}} className = 'my-2'>{props.heading}</h3>
                 <div className="mb-2">
                     <textarea className="form-control" id="text-box" rows="8" value={text} style = {{backgroundColor: props.mode === 'light'? '#041954': 'white', color: props.mode === 'light'? 'white':'#041954'}} onChange={handle_onChange}></textarea>
                 </div>
-                <button className="btn btn-outline-warning text btn-sm mx-3 col-2 fw-bold fw-italic" onClick={handle_LowClick}>Convert to Lower Case</button>
-                <button className="btn btn-outline-warning text btn-sm mx-4 col-2 fw-bold fw-italic" onClick={handle_UpClick}>Convert to Upper Case</button>
-                <button className="btn btn-outline-warning text btn-sm mx-3 col-2 fw-bold fw-italic" onClick={handle_ExtraSpace}>Remove Extra Spaces</button>
-                <button className="btn btn-outline-warning text btn-sm mx-3 col-2 fw-bold fw-italic" onClick={handle_CopyText}>Copy Text</button>
-                <button className="btn btn-outline-warning text btn-sm mx-4 col-2 fw-bold fw-italic" onClick={handle_ClearText}>Clear Text</button>
+                <button className="btn btn-outline-warning text btn-sm mx-3 col-2 fw-bold fw-italic" onClick={handle_UpClick} disabled = {text.length === 0}>Convert to Upper Case</button>
+                <button className="btn btn-outline-warning text btn-sm mx-3 col-2 fw-bold fw-italic" onClick={handle_ExtraSpace} disabled = {text.length === 0}>Remove Extra Spaces</button>
+                <button className="btn btn-outline-warning text btn-sm mx-3 col-2 fw-bold fw-italic" onClick={handle_CopyText} disabled = {text.length === 0}>Copy Text</button>
+                <button className="btn btn-outline-warning text btn-sm mx-3 col-2 fw-bold fw-italic" onClick={handle_LowClick} disabled = {text.length === 0}>Convert to Lower Case</button>
+                <button className="btn btn-outline-warning text btn-sm mx-3 col-2 fw-bold fw-italic" onClick={handle_ClearText} disabled = {text.length === 0}>Clear Text</button>
                 
                 
             </div>
 
             <div className="container my-5" style = {{color: props.mode === 'light'? '#041954': 'white'}}>
                 <h2>Your Text Summary</h2>
-                <p>{text.split(" ").length - 1} Words {text.length} Characters</p>
-                <p>Data read in {0.008 * text.split(" ").length} Minutes</p>
+                <p>{text.split(/\s+/).filter((element) => {return element.length!==0}).length} Words {text.length} Characters</p>
+                <p>{0.008 * text.split(" ").filter((element) => {return element.length!==0}).length} Minutes Read</p>
                 <h5>Preview</h5>
-                <p>{text.length > 0? text: "Enter some text in the box above to preview it as a Summary"}</p>
+                <p>{text.length > 0? text: "Nothing to preview"}</p>
             </div>
         </>
     )
 }
-
-// TextForm.prototypes = {
-//     text-box_name: PropTypes.string,
-// }

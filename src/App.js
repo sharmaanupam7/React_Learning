@@ -1,15 +1,15 @@
 import './App.css';
 import Navbar from './components/Navbar';
-// import About from './components/About';
+import About from './components/About';
 import TextForm from './components/TextForm';
 import { useState } from 'react';
 import Alert from './components/Alert';
 import React from 'react';
-// import {
-//   BrowserRouter as Router,
-//   Routes,
-//   Route
-// } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
 
 
 function App() {
@@ -57,17 +57,16 @@ function App() {
 
   return (
     <>
-      {/* <Router> */}
-        <Navbar mode={mode} toggleMode={toggleMode} title="TextUtils" homeText="Home" /*</>aboutText="About TextUtils"*/ searchText="Search"></Navbar>
+      <Router>
+        <Navbar mode={mode} toggleMode={toggleMode} title="TextUtils" homeText="Home" aboutText="About TextUtils" searchText="Search"></Navbar>
         <Alert alert={alert}></Alert>
         <div className="container my-3">
-          {/* <Routes> */}
-            {/* <Route exact path ="/about_textUtils" element = {<About title = 'About Us'></About>}></Route> */}
-            {/* <Route exact path ="/" element = {<TextForm mode={mode} heading="Enter The Text To Analyze Below" showAlert={showAlert}></TextForm>}></Route> */}
-          {/* </Routes> */}
-          <TextForm mode={mode} heading="Enter The Text To Analyze Below" showAlert={showAlert}></TextForm>
+          <Routes>
+            <Route exact path ="/about_textUtils" element = {<About title = 'About Us'></About>}></Route>
+            <Route exact path ="/" element = {<TextForm mode={mode} heading="Try TextUtils - Word Counter, Character Counter, Remove Extra Spaces" showAlert={showAlert}></TextForm>}></Route>
+          </Routes>
         </div>
-      {/* </Router> */}
+      </Router>
     </>
   );
 }
